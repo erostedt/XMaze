@@ -41,26 +41,14 @@ xmaze::Window xmaze::Window::Create(size_t width, size_t height)
     char *pixels = new char[image_bytes];
     std::memset(pixels, 0, image_bytes);
 
-    window.m_BackBuffer =
-        XCreateImage(window.m_Display, DefaultVisual(window.m_Display, window.m_Screen),
-                     DefaultDepth(window.m_Display, window.m_Screen), ZPixmap, 0, pixels, width, height, 32, 0);
-
     XSetForeground(window.m_Display, window.m_GC, BlackPixel(window.m_Display, window.m_Screen));
 
     XMapWindow(window.m_Display, window.m_Window);
     return window;
 }
 
-void Window::Draw()
-{
-    Size size = GetSize();
-    XPutImage(m_Display, m_Window, m_GC, m_BackBuffer, 0, 0, 0, 0, size.Width, size.Height);
-    XFlush(m_Display);
-}
-
 xmaze::Window::~Window()
 {
-    XDestroyImage(m_BackBuffer);
     XFreeGC(m_Display, m_GC);
     XDestroyWindow(m_Display, m_Window);
     XCloseDisplay(m_Display);
@@ -78,11 +66,6 @@ std::vector<XEvent> xmaze::Window::GetEvents()
         events.push_back(event);
     }
     return events;
-}
-
-XImage *Window::Image()
-{
-    return m_BackBuffer;
 }
 
 bool Window::ShouldClose()

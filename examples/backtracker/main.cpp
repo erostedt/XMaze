@@ -18,6 +18,5 @@ int main()
                 window.SetShouldClose();
             }
         }
-        window.Draw();
     }
 }

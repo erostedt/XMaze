@@ -22,7 +22,6 @@ class Window
     Size GetSize() const;
     size_t GetWidth() const;
     size_t GetHeight() const;
-    XImage *Image();
     ~Window();
 
   private:
@@ -30,7 +29,6 @@ class Window
     int m_Screen;
     ::Window m_Window;
     GC m_GC;
-    XImage *m_BackBuffer;
     bool m_ShouldClose = false;
 };
 
