@@ -22,6 +22,10 @@ class Window
     Size GetSize() const;
     size_t GetWidth() const;
     size_t GetHeight() const;
+    Display *GetDisplay() const;
+    int GetScreen() const ;
+    ::Window GetNativeWindow() const;
+    GC GetGC() const;
     ~Window();
 
   private:

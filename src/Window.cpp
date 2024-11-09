@@ -97,4 +97,24 @@ size_t Window::GetHeight() const
     return GetSize().Height;
 }
 
+Display *Window::GetDisplay() const
+{
+    return m_Display;
+}
+
+int Window::GetScreen() const
+{
+    return m_Screen;
+}
+
+::Window Window::GetNativeWindow() const
+{
+    return m_Window;
+}
+
+GC Window::GetGC() const
+{
+    return m_GC;
+}
+
 }; // namespace xmaze
