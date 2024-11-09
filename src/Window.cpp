@@ -48,14 +48,13 @@ xmaze::Window xmaze::Window::Create(size_t width, size_t height)
     XSetForeground(window.m_Display, window.m_GC, BlackPixel(window.m_Display, window.m_Screen));
 
     XMapWindow(window.m_Display, window.m_Window);
-    window.m_Width = width;
-    window.m_Height = height;
     return window;
 }
 
 void Window::Draw()
 {
-    XPutImage(m_Display, m_Window, m_GC, m_BackBuffer, 0, 0, 0, 0, m_Width, m_Height);
+    Size size = GetSize();
+    XPutImage(m_Display, m_Window, m_GC, m_BackBuffer, 0, 0, 0, 0, size.Width, size.Height);
     XFlush(m_Display);
 }
 
@@ -94,6 +93,25 @@ bool Window::ShouldClose()
 void Window::SetShouldClose()
 {
     m_ShouldClose = true;
+}
+
+Size Window::GetSize() const
+{
+    XWindowAttributes attrs;
+    XGetWindowAttributes(m_Display, m_Window, &attrs);
+    size_t width = attrs.width;
+    size_t height = attrs.height;
+    return {width, height};
+}
+
+size_t Window::GetWidth() const
+{
+    return GetSize().Width;
+}
+
+size_t Window::GetHeight() const
+{
+    return GetSize().Height;
 }
 
 }; // namespace xmaze

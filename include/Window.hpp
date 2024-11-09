@@ -5,6 +5,12 @@
 namespace xmaze
 {
 
+struct Size
+{
+    size_t Width;
+    size_t Height;
+};
+
 class Window
 {
   public:
@@ -13,6 +19,9 @@ class Window
     bool ShouldClose();
     void SetShouldClose();
     std::vector<XEvent> GetEvents();
+    Size GetSize() const;
+    size_t GetWidth() const;
+    size_t GetHeight() const;
     XImage *Image();
     ~Window();
 
@@ -21,8 +30,6 @@ class Window
     int m_Screen;
     ::Window m_Window;
     GC m_GC;
-    size_t m_Width;
-    size_t m_Height;
     XImage *m_BackBuffer;
     bool m_ShouldClose = false;
 };
