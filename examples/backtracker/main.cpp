@@ -1,5 +1,6 @@
 #include <X11/Xlib.h>
 
+#include "Maze.hpp"
 #include "Pixmap.hpp"
 #include "Window.hpp"
 
@@ -16,6 +17,12 @@ int main()
     XSetForeground(display, gc, WhitePixel(display, screen));
     XFillRectangle(display, pixmap.GetID(), gc, 0, 0, 800, 600);
     XSetForeground(display, gc, BlackPixel(display, screen));
+
+    xmaze::Maze maze = {
+        {{0, 0}, {100, 200}},
+        {{200, 200}, {100, 200}},
+    };
+
     while (!window.ShouldClose())
     {
         auto events = window.GetEvents();
@@ -27,9 +34,7 @@ int main()
             }
             if (event.type == KeyPress && XLookupKeysym(&event.xkey, 0) == 'k')
             {
-                XDrawLine(window.GetDisplay(), pixmap.GetID(), window.GetGC(), 0, 400, 799, 0);
-                XFlush(window.GetDisplay());
-                XCopyArea(display, pixmap.GetID(), window.GetNativeWindow(), gc, 0, 0, width, height, 0, 0);
+                xmaze::DrawMaze(maze, window, pixmap);
             }
         }
     }

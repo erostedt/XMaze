@@ -12,7 +12,7 @@ class Pixmap
     {
         m_Display = window.GetDisplay();
         int screen = window.GetScreen();
-        const auto [width, height] = window.GetSize();
+        const auto [width, height] = window.GetShape();
         m_PixmapID = XCreatePixmap(m_Display, window.GetNativeWindow(), width, height, DefaultDepth(m_Display, screen));
     }
 

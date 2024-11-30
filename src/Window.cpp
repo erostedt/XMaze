@@ -78,7 +78,7 @@ void Window::SetShouldClose()
     m_ShouldClose = true;
 }
 
-Size Window::GetSize() const
+Shape Window::GetShape() const
 {
     XWindowAttributes attrs;
     XGetWindowAttributes(m_Display, m_Window, &attrs);
@@ -89,12 +89,12 @@ Size Window::GetSize() const
 
 size_t Window::GetWidth() const
 {
-    return GetSize().Width;
+    return GetShape().Width;
 }
 
 size_t Window::GetHeight() const
 {
-    return GetSize().Height;
+    return GetShape().Height;
 }
 
 Display *Window::GetDisplay() const

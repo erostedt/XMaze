@@ -2,14 +2,10 @@
 #include <X11/Xlib.h>
 #include <vector>
 
+#include <Shape.hpp>
+
 namespace xmaze
 {
-
-struct Size
-{
-    size_t Width;
-    size_t Height;
-};
 
 class Window
 {
@@ -19,11 +15,11 @@ class Window
     bool ShouldClose();
     void SetShouldClose();
     std::vector<XEvent> GetEvents();
-    Size GetSize() const;
+    Shape GetShape() const;
     size_t GetWidth() const;
     size_t GetHeight() const;
     Display *GetDisplay() const;
-    int GetScreen() const ;
+    int GetScreen() const;
     ::Window GetNativeWindow() const;
     GC GetGC() const;
     ~Window();
