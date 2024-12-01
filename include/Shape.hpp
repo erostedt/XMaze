@@ -2,17 +2,33 @@
 
 #include <cstddef>
 
+namespace xmaze
+{
+
 template <typename T> struct Point
 {
-    T X;
-    T Y;
+    T x;
+    T y;
+    Point<T> operator+(const Point<T> &other)
+    {
+        return {x + other.x, y + other.y};
+    }
 };
 
-using Origin = Point<size_t>;
+using Cell = Point<int>;
 using Direction = Point<int>;
+using Origin = Point<size_t>;
 
 struct Shape
 {
-    size_t Width;
-    size_t Height;
+    size_t width;
+    size_t height;
 };
+
+struct Rect
+{
+    Origin top_left;
+    Shape shape;
+};
+
+}; // namespace xmaze

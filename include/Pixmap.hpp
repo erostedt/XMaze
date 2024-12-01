@@ -12,8 +12,9 @@ class Pixmap
     {
         m_Display = window.GetDisplay();
         int screen = window.GetScreen();
-        const auto [width, height] = window.GetShape();
-        m_PixmapID = XCreatePixmap(m_Display, window.GetNativeWindow(), width, height, DefaultDepth(m_Display, screen));
+        const auto rect = window.GetActiveArea();
+        m_PixmapID = XCreatePixmap(m_Display, window.GetNativeWindow(), rect.shape.width, rect.shape.height,
+                                   DefaultDepth(m_Display, screen));
     }
 
     ::Pixmap GetID()

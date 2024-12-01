@@ -78,23 +78,14 @@ void Window::SetShouldClose()
     m_ShouldClose = true;
 }
 
-Shape Window::GetShape() const
+Rect Window::GetActiveArea() const
 {
     XWindowAttributes attrs;
     XGetWindowAttributes(m_Display, m_Window, &attrs);
-    size_t width = attrs.width;
-    size_t height = attrs.height;
-    return {width, height};
-}
-
-size_t Window::GetWidth() const
-{
-    return GetShape().Width;
-}
-
-size_t Window::GetHeight() const
-{
-    return GetShape().Height;
+    size_t border = attrs.border_width;
+    size_t width = attrs.width - border;
+    size_t height = attrs.height - border;
+    return {{border, border}, {width, height}};
 }
 
 Display *Window::GetDisplay() const

@@ -15,9 +15,7 @@ class Window
     bool ShouldClose();
     void SetShouldClose();
     std::vector<XEvent> GetEvents();
-    Shape GetShape() const;
-    size_t GetWidth() const;
-    size_t GetHeight() const;
+    Rect GetActiveArea() const;
     Display *GetDisplay() const;
     int GetScreen() const;
     ::Window GetNativeWindow() const;
