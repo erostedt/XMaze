@@ -1,18 +1,9 @@
 #include <X11/Xlib.h>
 #include <cstdlib>
-#include <iostream>
 
 #include "Maze.hpp"
 #include "Pixmap.hpp"
 #include "Window.hpp"
-
-xmaze::Cell RandomCell(xmaze::Shape shape)
-{
-    xmaze::Cell cell;
-    cell.x = rand() % shape.width;
-    cell.y = rand() % shape.height;
-    return cell;
-}
 
 int main()
 {
@@ -25,7 +16,7 @@ int main()
     auto gc = window.GetGC();
     auto screen = window.GetScreen();
 
-    xmaze::Maze maze({4, 3});
+    xmaze::Maze maze = xmaze::GenerateMaze({40, 30});
 
     while (!window.ShouldClose())
     {
@@ -46,8 +37,6 @@ int main()
                 const auto h = rect.shape.height;
                 XFillRectangle(display, pixmap.GetID(), gc, x, y, w, h);
                 XSetForeground(display, gc, BlackPixel(display, screen));
-                auto cell = RandomCell(maze.shape);
-                maze.RemoveWall(cell, xmaze::WEST);
                 xmaze::DrawMaze(maze, window, pixmap);
             }
         }
