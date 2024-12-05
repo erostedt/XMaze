@@ -5,9 +5,9 @@
 #include <iterator>
 #include <vector>
 
-#include <Pixmap.hpp>
-#include <Shape.hpp>
-#include <Window.hpp>
+#include "DrawFrame.hpp"
+#include "Shape.hpp"
+#include "Window.hpp"
 
 namespace xmaze
 {
@@ -138,8 +138,8 @@ class Maze
     std::vector<unsigned char> m_Cells;
 };
 
-void DrawCell(Cell cell, Shape cell_shape, const char *color, const Window &window, Pixmap &pixmap);
-void DrawMaze(const Maze &maze, const Window &window, Pixmap &pixmap);
+void DrawCell(Cell cell, Shape cell_shape, const char *color, DrawFrame &draw_frame);
+void DrawMaze(const Maze &maze, DrawFrame &draw_frame);
 
 Shape GetCellShape(const Window &window, const Maze &maze);
 

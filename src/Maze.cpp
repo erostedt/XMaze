@@ -2,6 +2,7 @@
 
 #include <X11/Xlib.h>
 
+#include "DrawFrame.hpp"
 #include "Maze.hpp"
 #include "Pixmap.hpp"
 #include "Window.hpp"
@@ -32,8 +33,10 @@ void SetPenColor(Display *display, int screen, GC gc, const char *color)
     XSetForeground(display, gc, x_color.pixel);
 }
 
-void DrawCell(Cell cell, Shape cell_shape, const char *color, const Window &window, Pixmap &pixmap)
+void DrawCell(Cell cell, Shape cell_shape, const char *color, DrawFrame &draw_frame)
 {
+    const auto &window = draw_frame.GetWindow();
+    auto &pixmap = draw_frame.GetPixmap();
     auto display = window.GetDisplay();
     auto gc = window.GetGC();
     SetPenColor(display, window.GetScreen(), gc, color);
@@ -42,8 +45,10 @@ void DrawCell(Cell cell, Shape cell_shape, const char *color, const Window &wind
     XFillRectangle(display, pixmap.GetID(), gc, ix * cw, iy * ch, cw, ch);
 }
 
-void DrawMaze(const Maze &maze, const Window &window, Pixmap &pixmap)
+void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
 {
+    const auto &window = draw_frame.GetWindow();
+    auto &pixmap = draw_frame.GetPixmap();
     auto display = window.GetDisplay();
     auto gc = window.GetGC();
     SetDefaultPen(display, gc);
