@@ -29,6 +29,31 @@ struct Rect
 {
     Origin top_left;
     Shape shape;
+
+    size_t Left() const
+    {
+        return top_left.x;
+    }
+    size_t Right() const
+    {
+        return top_left.x + shape.width;
+    }
+    size_t Top() const
+    {
+        return top_left.y;
+    }
+    size_t Bottom() const
+    {
+        return top_left.y + shape.height;
+    }
+    size_t Width() const
+    {
+        return shape.width;
+    }
+    size_t Height() const
+    {
+        return shape.height;
+    }
 };
 
 }; // namespace xmaze

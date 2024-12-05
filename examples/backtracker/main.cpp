@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 #include "Maze.hpp"
+#include "MazeGenerator.hpp"
 #include "Pixmap.hpp"
 #include "Window.hpp"
 
@@ -16,7 +17,7 @@ int main()
     auto gc = window.GetGC();
     auto screen = window.GetScreen();
 
-    xmaze::Maze maze = xmaze::GenerateMaze({40, 30});
+    xmaze::MazeGenerator generator({40, 30});
 
     while (!window.ShouldClose())
     {
@@ -27,17 +28,38 @@ int main()
             {
                 window.SetShouldClose();
             }
-            if (event.type == KeyPress && XLookupKeysym(&event.xkey, 0) == 'k')
+            if (event.type == KeyPress && XLookupKeysym(&event.xkey, 0) == 'u')
             {
                 const auto rect = window.GetActiveArea();
                 XSetForeground(display, gc, WhitePixel(display, screen));
-                const auto x = rect.top_left.x;
-                const auto y = rect.top_left.y;
-                const auto w = rect.shape.width;
-                const auto h = rect.shape.height;
-                XFillRectangle(display, pixmap.GetID(), gc, x, y, w, h);
+                XFillRectangle(display, pixmap.GetID(), gc, rect.Left(), rect.Top(), rect.Width(), rect.Height());
                 XSetForeground(display, gc, BlackPixel(display, screen));
-                xmaze::DrawMaze(maze, window, pixmap);
+                generator.Advance();
+                const auto &maze = generator.GetMaze();
+                const auto cell_shape = xmaze::GetCellShape(window, maze);
+                DrawCell(maze.StartCell(), cell_shape, "red", window, pixmap);
+                DrawCell(maze.EndCell(), cell_shape, "green", window, pixmap);
+                DrawCell(generator.CurrentCell(), cell_shape, "blue", window, pixmap);
+                xmaze::DrawMaze(generator.GetMaze(), window, pixmap);
+
+                XFlush(display);
+                XCopyArea(display, pixmap.GetID(), window.GetNativeWindow(), gc, 0, 0, width, height, 0, 0);
+            }
+            if (event.type == KeyPress && XLookupKeysym(&event.xkey, 0) == 'g')
+            {
+                const auto rect = window.GetActiveArea();
+                XSetForeground(display, gc, WhitePixel(display, screen));
+                XFillRectangle(display, pixmap.GetID(), gc, rect.Left(), rect.Top(), rect.Width(), rect.Height());
+                XSetForeground(display, gc, BlackPixel(display, screen));
+                generator.Generate();
+                const auto &maze = generator.GetMaze();
+                const auto cell_shape = xmaze::GetCellShape(window, maze);
+                DrawCell(maze.StartCell(), cell_shape, "red", window, pixmap);
+                DrawCell(maze.EndCell(), cell_shape, "green", window, pixmap);
+                xmaze::DrawMaze(generator.GetMaze(), window, pixmap);
+
+                XFlush(display);
+                XCopyArea(display, pixmap.GetID(), window.GetNativeWindow(), gc, 0, 0, width, height, 0, 0);
             }
         }
     }

@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <array>
-
 #include <iterator>
 #include <vector>
 
@@ -139,9 +138,9 @@ class Maze
     std::vector<unsigned char> m_Cells;
 };
 
+void DrawCell(Cell cell, Shape cell_shape, const char *color, const Window &window, Pixmap &pixmap);
 void DrawMaze(const Maze &maze, const Window &window, Pixmap &pixmap);
 
-Maze GenerateMaze(Shape shape);
-Maze GenerateMaze(Shape shape, Cell start, Cell end);
+Shape GetCellShape(const Window &window, const Maze &maze);
 
 } // namespace xmaze
