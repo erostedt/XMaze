@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 
+#include "Cell.hpp"
 #include "DrawFrame.hpp"
 #include "Shape.hpp"
 #include "Window.hpp"

@@ -1,21 +1,11 @@
 #pragma once
 
+#include "Point.hpp"
+
 namespace XMaze
 {
 
-template <typename T> struct Point
-{
-    T x;
-    T y;
-    Point<T> operator+(const Point<T> &other)
-    {
-        return {x + other.x, y + other.y};
-    }
-};
-
-using Cell = Point<int>;
-using Direction = Point<int>;
-using Origin = Point<int>;
+using TopLeft = Point<int>;
 
 struct Shape
 {
@@ -26,7 +16,7 @@ struct Shape
 class Rect
 {
   public:
-    Rect(Origin top_left, Shape shape) : m_TopLeft(top_left), m_Shape(shape)
+    Rect(TopLeft top_left, Shape shape) : m_TopLeft(top_left), m_Shape(shape)
     {
     }
 
@@ -66,7 +56,7 @@ class Rect
     }
 
   private:
-    Origin m_TopLeft;
+    TopLeft m_TopLeft;
     Shape m_Shape;
 };
 

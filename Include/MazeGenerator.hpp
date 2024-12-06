@@ -3,6 +3,7 @@
 #include <stack>
 #include <unordered_set>
 
+#include "Cell.hpp"
 #include "Maze.hpp"
 #include "Shape.hpp"
 
