@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 
+#include "DrawFrame.hpp"
 #include "Window.hpp"
 
 namespace XMaze
@@ -57,6 +58,11 @@ Window::~Window()
     XFreeGC(m_Display, m_GC);
     XDestroyWindow(m_Display, m_Window);
     XCloseDisplay(m_Display);
+}
+
+DrawFrame Window::NewDrawFrame()
+{
+    return DrawFrame(*this);
 }
 
 std::vector<XEvent> Window::GetEvents()
