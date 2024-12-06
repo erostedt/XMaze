@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstddef>
-
 namespace xmaze
 {
 
@@ -17,12 +15,12 @@ template <typename T> struct Point
 
 using Cell = Point<int>;
 using Direction = Point<int>;
-using Origin = Point<size_t>;
+using Origin = Point<int>;
 
 struct Shape
 {
-    size_t width;
-    size_t height;
+    int width;
+    int height;
 };
 
 struct Rect
@@ -30,27 +28,27 @@ struct Rect
     Origin top_left;
     Shape shape;
 
-    size_t Left() const
+    int Left() const
     {
         return top_left.x;
     }
-    size_t Right() const
+    int Right() const
     {
         return top_left.x + shape.width;
     }
-    size_t Top() const
+    int Top() const
     {
         return top_left.y;
     }
-    size_t Bottom() const
+    int Bottom() const
     {
         return top_left.y + shape.height;
     }
-    size_t Width() const
+    int Width() const
     {
         return shape.width;
     }
-    size_t Height() const
+    int Height() const
     {
         return shape.height;
     }

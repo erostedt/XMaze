@@ -87,9 +87,9 @@ Rect Window::GetActiveArea() const
 {
     XWindowAttributes attrs;
     XGetWindowAttributes(m_Display, m_Window, &attrs);
-    size_t border = attrs.border_width;
-    size_t width = attrs.width - border;
-    size_t height = attrs.height - border;
+    int border = attrs.border_width;
+    int width = attrs.width - border;
+    int height = attrs.height - border;
     return {{border, border}, {width, height}};
 }
 
