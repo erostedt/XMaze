@@ -59,19 +59,19 @@ void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
         const short xend = (ix + 1) * cell_width;
         const short ystart = iy * cell_height;
         const short yend = (iy + 1) * cell_height;
-        if (maze.HasWall({ix, iy}, NORTH))
+        if (maze.HasWall({ix, iy}, Wall::NORTH))
         {
             XDrawLine(display, pixmap, gc, xstart, ystart, xend, ystart);
         }
-        if (maze.HasWall({ix, iy}, WEST))
+        if (maze.HasWall({ix, iy}, Wall::WEST))
         {
             XDrawLine(display, pixmap, gc, xstart, ystart, xstart, yend);
         }
-        if (maze.HasWall({ix, iy}, SOUTH))
+        if (maze.HasWall({ix, iy}, Wall::SOUTH))
         {
             XDrawLine(display, pixmap, gc, xstart, yend, xend, yend);
         }
-        if (maze.HasWall({ix, iy}, EAST))
+        if (maze.HasWall({ix, iy}, Wall::EAST))
         {
             XDrawLine(display, pixmap, gc, xend, ystart, xend, yend);
         }

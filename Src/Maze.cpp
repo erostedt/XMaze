@@ -7,6 +7,30 @@
 namespace XMaze
 {
 
+enum WallBit
+{
+    NORTH_BIT = 1 << static_cast<int>(Wall::NORTH),
+    WEST_BIT = 1 << static_cast<int>(Wall::WEST),
+    SOUTH_BIT = 1 << static_cast<int>(Wall::SOUTH),
+    EAST_BIT = 1 << static_cast<int>(Wall::EAST),
+};
+
+static const unsigned char WALL_BITS[] = {
+    WallBit::NORTH_BIT,
+    WallBit::WEST_BIT,
+    WallBit::SOUTH_BIT,
+    WallBit::EAST_BIT,
+};
+
+const static std::array<Wall, WALL_COUNT> OPPOSITE_WALL = {Wall::SOUTH, Wall::EAST, Wall::NORTH, Wall::WEST};
+
+const static std::array<Direction, WALL_COUNT> DIRECTIONS = {Direction{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+
+Direction GetDirection(Wall wall)
+{
+    return DIRECTIONS[static_cast<int>(wall)];
+}
+
 Maze::Maze(Shape shape, Cell start, Cell end) : m_Shape(shape), m_Start(start), m_End(end)
 {
     const unsigned char ALL_WALLS = NORTH_BIT | WEST_BIT | SOUTH_BIT | EAST_BIT;
@@ -44,7 +68,8 @@ unsigned char &Maze::At(Cell cell)
 void Maze::RemoveWall(Cell cell, Wall wall)
 {
     _RemoveWall(cell, wall);
-    _RemoveWall(cell + DIRECTIONS[wall], OPPOSITE_WALL[wall]);
+    const int wall_index = static_cast<int>(wall);
+    _RemoveWall(cell + DIRECTIONS[wall_index], OPPOSITE_WALL[wall_index]);
 }
 
 int Maze::Cols() const
@@ -69,7 +94,7 @@ Cell Maze::EndCell() const
 
 bool Maze::HasWall(Cell cell, Wall wall) const
 {
-    return At(cell) & WALL_BITS[wall];
+    return At(cell) & WALL_BITS[static_cast<int>(wall)];
 }
 
 bool Maze::OutOfBounds(Cell cell)
@@ -84,7 +109,7 @@ void Maze::_RemoveWall(Cell cell, Wall wall)
     if (!OutOfBounds(cell))
     {
         unsigned char &walls = At(cell);
-        walls &= ~WALL_BITS[wall];
+        walls &= ~WALL_BITS[static_cast<int>(wall)];
     }
 }
 

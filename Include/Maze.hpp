@@ -12,7 +12,7 @@ namespace XMaze
 
 static const size_t WALL_COUNT = 4;
 
-enum Wall
+enum class Wall
 {
     NORTH = 0,
     WEST,
@@ -20,24 +20,9 @@ enum Wall
     EAST
 };
 
-enum WallBit
-{
-    NORTH_BIT = 1 << NORTH,
-    WEST_BIT = 1 << WEST,
-    SOUTH_BIT = 1 << SOUTH,
-    EAST_BIT = 1 << EAST,
-};
+const static std::array<Wall, WALL_COUNT> WALLS = {Wall::NORTH, Wall::WEST, Wall::SOUTH, Wall::EAST};
 
-static unsigned char WALL_BITS[] = {
-    NORTH_BIT,
-    WEST_BIT,
-    SOUTH_BIT,
-    EAST_BIT,
-};
-
-const static std::array<Direction, WALL_COUNT> DIRECTIONS = {Direction{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
-const static std::array<Wall, WALL_COUNT> WALLS = {NORTH, WEST, SOUTH, EAST};
-const static std::array<Wall, WALL_COUNT> OPPOSITE_WALL = {SOUTH, EAST, NORTH, WEST};
+Direction GetDirection(Wall wall);
 
 class Maze
 {

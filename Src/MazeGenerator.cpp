@@ -2,6 +2,7 @@
 #include <stack>
 #include <unordered_set>
 
+#include "Maze.hpp"
 #include "MazeGenerator.hpp"
 #include "Shape.hpp"
 
@@ -50,7 +51,7 @@ bool MazeGenerator::Advance()
     m_CurrentWalls.clear();
     for (const auto wall : WALLS)
     {
-        Cell neighbor = m_Current + DIRECTIONS[wall];
+        Cell neighbor = m_Current + GetDirection(wall);
         if (!m_Visited.contains(m_Maze.RavelCell(neighbor)) && !m_Maze.OutOfBounds(neighbor))
         {
             m_CurrentWalls.push_back(wall);
@@ -67,7 +68,7 @@ bool MazeGenerator::Advance()
     Wall wall = RandomWall(m_CurrentWalls);
     m_Maze.RemoveWall(m_Current, wall);
 
-    m_Current = m_Current + DIRECTIONS[wall];
+    m_Current = m_Current + GetDirection(wall);
     m_CellStack.push(m_Current);
     return false;
 }
