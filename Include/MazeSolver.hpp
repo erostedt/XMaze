@@ -30,16 +30,19 @@ class MazeSolver
 
     std::optional<Path> GetPath() const;
     bool HasTerminated() const;
+    bool IsSolved() const;
 
     bool Advance();
     std::optional<Path> Solve();
+
+  private:
+    std::optional<AStarCell> CurrentCell() const;
 
   private:
     const Maze &m_Maze;
     std::priority_queue<AStarCell, std::vector<AStarCell>, std::greater<AStarCell>> m_Queue;
     std::unordered_map<Cell, int> m_MinDistancesTraveled;
     std::unordered_map<Cell, Cell> m_Parents;
-    std::optional<Path> m_Path;
 };
 
 }; // namespace XMaze

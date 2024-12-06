@@ -23,14 +23,45 @@ MazeSolver::MazeSolver(const Maze &maze) : m_Maze(maze)
     m_MinDistancesTraveled[start] = 0;
 }
 
+bool MazeSolver::IsSolved() const
+{
+    const auto current_cell = CurrentCell();
+    return current_cell && (current_cell->Position == m_Maze.EndCell());
+}
+
 bool MazeSolver::HasTerminated() const
 {
-    return m_Queue.empty() || m_Path.has_value();
+    return m_Queue.empty() || IsSolved();
+}
+
+std::optional<AStarCell> MazeSolver::CurrentCell() const
+{
+    if (m_Queue.empty())
+    {
+        return {};
+    }
+    return m_Queue.top();
 }
 
 std::optional<Path> MazeSolver::GetPath() const
 {
-    return m_Path;
+    const auto current = CurrentCell();
+    if (!current)
+    {
+        return {};
+    }
+
+    const auto start = m_Maze.StartCell();
+    std::vector<Cell> path;
+    Cell curr = current->Position;
+    while (curr != start)
+    {
+        path.push_back(curr);
+        curr = m_Parents.at(curr);
+    }
+    path.push_back(start);
+    std::reverse(path.begin(), path.end());
+    return path;
 }
 
 bool MazeSolver::Advance()
@@ -40,26 +71,10 @@ bool MazeSolver::Advance()
         return true;
     }
 
-    const auto start = m_Maze.StartCell();
     const auto end = m_Maze.EndCell();
 
     auto current = m_Queue.top();
     m_Queue.pop();
-
-    if (current.Position == end)
-    {
-        std::vector<Cell> path;
-        Cell curr = current.Position;
-        while (curr != start)
-        {
-            path.push_back(curr);
-            curr = m_Parents[curr];
-        }
-        path.push_back(start);
-        std::reverse(path.begin(), path.end());
-        m_Path = path;
-        return true;
-    }
 
     for (const auto wall : WALLS)
     {
