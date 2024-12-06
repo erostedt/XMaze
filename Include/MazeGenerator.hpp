@@ -25,7 +25,7 @@ class MazeGenerator
     Maze m_Maze;
     Cell m_Current;
     std::stack<Cell> m_CellStack;
-    std::unordered_set<int> m_Visited;
+    std::unordered_set<Cell> m_Visited;
     std::vector<Wall> m_CurrentWalls;
 };
 

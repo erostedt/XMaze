@@ -47,13 +47,13 @@ bool MazeGenerator::Advance()
         return true;
     }
 
-    m_Visited.insert(m_Maze.RavelCell(m_Current));
+    m_Visited.insert(m_Current);
 
     m_CurrentWalls.clear();
     for (const auto wall : WALLS)
     {
         Cell neighbor = m_Current + GetDirection(wall);
-        if (!m_Visited.contains(m_Maze.RavelCell(neighbor)) && !m_Maze.OutOfBounds(neighbor))
+        if (!m_Visited.contains(neighbor) && !m_Maze.OutOfBounds(neighbor))
         {
             m_CurrentWalls.push_back(wall);
         }
