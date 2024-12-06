@@ -16,14 +16,14 @@ Maze::Maze(Shape shape, Cell start, Cell end) : m_Shape(shape), m_Start(start), 
     std::fill_n(std::back_inserter(m_Cells), CELL_COUNT, ALL_WALLS);
 }
 
-MazeCellIterator Maze::begin() const
+Maze::MazeIterator Maze::begin() const
 {
-    return MazeCellIterator(m_Shape, {0, 0});
+    return MazeIterator(m_Shape, {0, 0});
 }
 
-MazeCellIterator Maze::end() const
+Maze::MazeIterator Maze::end() const
 {
-    return MazeCellIterator(m_Shape, {0, m_Shape.height});
+    return MazeIterator(m_Shape, {0, m_Shape.height});
 }
 
 int Maze::RavelCell(Cell cell) const
