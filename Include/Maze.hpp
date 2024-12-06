@@ -7,7 +7,7 @@
 #include "Shape.hpp"
 #include "Window.hpp"
 
-namespace xmaze
+namespace XMaze
 {
 
 static const size_t WALL_COUNT = 4;
@@ -121,4 +121,4 @@ class Maze
 
 Shape GetCellShape(const Window &window, const Maze &maze);
 
-} // namespace xmaze
+} // namespace XMaze

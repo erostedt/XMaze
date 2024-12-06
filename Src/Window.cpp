@@ -7,12 +7,12 @@
 
 #include "Window.hpp"
 
-namespace xmaze
+namespace XMaze
 {
 
-xmaze::Window xmaze::Window::Create(size_t width, size_t height)
+Window Window::Create(size_t width, size_t height)
 {
-    xmaze::Window window;
+    Window window;
 
     window.m_Display = XOpenDisplay(NULL);
     if (!window.m_Display)
@@ -27,7 +27,7 @@ xmaze::Window xmaze::Window::Create(size_t width, size_t height)
                                           height, 0, BlackPixel(window.m_Display, window.m_Screen),
                                           WhitePixel(window.m_Display, window.m_Screen));
 
-    XStoreName(window.m_Display, window.m_Window, "XMAZE");
+    XStoreName(window.m_Display, window.m_Window, "XMaze");
     XSelectInput(window.m_Display, window.m_Window, ExposureMask | KeyPressMask);
 
     window.m_GC = XCreateGC(window.m_Display, window.m_Window, 0, NULL);
@@ -51,7 +51,7 @@ xmaze::Window xmaze::Window::Create(size_t width, size_t height)
     return window;
 }
 
-xmaze::Window::~Window()
+Window::~Window()
 {
     XFreePixmap(m_Display, m_Pixmap);
     XFreeGC(m_Display, m_GC);
@@ -59,7 +59,7 @@ xmaze::Window::~Window()
     XCloseDisplay(m_Display);
 }
 
-std::vector<XEvent> xmaze::Window::GetEvents()
+std::vector<XEvent> Window::GetEvents()
 {
     XEvent event;
     std::vector<XEvent> events;
@@ -118,4 +118,4 @@ Pixmap Window::GetPixmap() const
     return m_Pixmap;
 }
 
-}; // namespace xmaze
+}; // namespace XMaze

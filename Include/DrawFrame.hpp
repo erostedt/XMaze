@@ -1,17 +1,17 @@
 #pragma once
 
-namespace xmaze
+namespace XMaze
 {
 class Window;
 
 class DrawFrame
 {
   public:
-    DrawFrame(xmaze::Window &window);
+    DrawFrame(Window &window);
     ~DrawFrame();
-    const xmaze::Window &GetWindow() const;
+    const Window &GetWindow() const;
 
   private:
-    xmaze::Window &m_Window;
+    Window &m_Window;
 };
-}; // namespace xmaze
+}; // namespace XMaze

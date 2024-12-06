@@ -1,10 +1,10 @@
 #include "DrawFrame.hpp"
 #include "Window.hpp"
 
-namespace xmaze
+namespace XMaze
 {
 
-DrawFrame::DrawFrame(xmaze::Window &window) : m_Window(window)
+DrawFrame::DrawFrame(Window &window) : m_Window(window)
 {
     auto display = m_Window.GetDisplay();
     auto gc = m_Window.GetGC();
@@ -26,9 +26,9 @@ DrawFrame::~DrawFrame()
     XCopyArea(display, pixmap, m_Window.GetNativeWindow(), gc, 0, 0, rect.Width(), rect.Height(), 0, 0);
 }
 
-const xmaze::Window &DrawFrame::GetWindow() const
+const Window &DrawFrame::GetWindow() const
 {
     return m_Window;
 }
 
-}; // namespace xmaze
+}; // namespace XMaze

@@ -4,7 +4,7 @@
 
 #include <Shape.hpp>
 
-namespace xmaze
+namespace XMaze
 {
 
 class Window
@@ -32,4 +32,4 @@ class Window
     bool m_ShouldClose = false;
 };
 
-}; // namespace xmaze
+}; // namespace XMaze

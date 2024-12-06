@@ -5,7 +5,7 @@
 #include "MazeGenerator.hpp"
 #include "Shape.hpp"
 
-namespace xmaze
+namespace XMaze
 {
 
 static std::random_device rd;
@@ -24,7 +24,7 @@ MazeGenerator::MazeGenerator(Shape shape, Cell start, Cell end) : m_Maze(shape, 
 }
 
 MazeGenerator::MazeGenerator(Shape shape)
-    : xmaze::MazeGenerator(shape, {0, 0}, {static_cast<int>(shape.width) - 1, static_cast<int>(shape.height) - 1})
+    : MazeGenerator(shape, {0, 0}, {static_cast<int>(shape.width) - 1, static_cast<int>(shape.height) - 1})
 {
 }
 
@@ -86,4 +86,4 @@ Maze MazeGenerator::Generate()
     return m_Maze;
 }
 
-} // namespace xmaze
+} // namespace XMaze

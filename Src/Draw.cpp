@@ -3,7 +3,7 @@
 
 #include <stdexcept>
 
-namespace xmaze
+namespace XMaze
 {
 
 void SetDefaultPen(Display *display, GC gc)
@@ -78,4 +78,4 @@ void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
     }
 }
 
-}; // namespace xmaze
+}; // namespace XMaze

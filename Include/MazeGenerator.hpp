@@ -6,7 +6,7 @@
 #include "Maze.hpp"
 #include "Shape.hpp"
 
-namespace xmaze
+namespace XMaze
 {
 
 class MazeGenerator
@@ -28,4 +28,4 @@ class MazeGenerator
     std::vector<Wall> m_CurrentWalls;
 };
 
-} // namespace xmaze
+} // namespace XMaze

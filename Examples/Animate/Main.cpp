@@ -1,4 +1,3 @@
-#include <X11/Xlib.h>
 #include <chrono>
 #include <cstdlib>
 #include <thread>
@@ -8,6 +7,8 @@
 #include "Maze.hpp"
 #include "MazeGenerator.hpp"
 #include "Window.hpp"
+
+using namespace XMaze;
 
 class LimitFps
 {
@@ -39,9 +40,9 @@ int main()
     const size_t MAZE_ROWS = 9 * 3;
     const size_t FPS = 60;
 
-    xmaze::Window window = xmaze::Window::Create(WIDTH, HEIGHT);
+    XMaze::Window window = XMaze::Window::Create(WIDTH, HEIGHT);
 
-    xmaze::MazeGenerator generator({MAZE_COLS, MAZE_ROWS});
+    MazeGenerator generator({MAZE_COLS, MAZE_ROWS});
 
     while (!window.ShouldClose())
     {
@@ -54,10 +55,10 @@ int main()
                 window.SetShouldClose();
             }
         }
-        xmaze::DrawFrame frame(window);
+        DrawFrame frame(window);
         generator.Advance();
         const auto &maze = generator.GetMaze();
-        const auto cell_shape = xmaze::GetCellShape(window, maze);
+        const auto cell_shape = GetCellShape(window, maze);
         DrawCell(maze.StartCell(), cell_shape, "red", frame);
         DrawCell(maze.EndCell(), cell_shape, "green", frame);
         DrawCell(generator.CurrentCell(), cell_shape, "blue", frame);

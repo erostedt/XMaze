@@ -4,7 +4,7 @@
 #include "Maze.hpp"
 #include "Window.hpp"
 
-namespace xmaze
+namespace XMaze
 {
 
 Maze::Maze(Shape shape, Cell start, Cell end) : m_Shape(shape), m_Start(start), m_End(end)
@@ -94,4 +94,4 @@ Shape GetCellShape(const Window &window, const Maze &maze)
     return {rect.Width() / maze.Cols(), rect.Height() / maze.Rows()};
 }
 
-}; // namespace xmaze
+}; // namespace XMaze

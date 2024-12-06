@@ -1,6 +1,6 @@
 #pragma once
 
-namespace xmaze
+namespace XMaze
 {
 
 template <typename T> struct Point
@@ -70,4 +70,4 @@ class Rect
     Shape m_Shape;
 };
 
-}; // namespace xmaze
+}; // namespace XMaze
