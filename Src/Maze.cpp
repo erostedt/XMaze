@@ -4,7 +4,6 @@
 
 #include "DrawFrame.hpp"
 #include "Maze.hpp"
-#include "Pixmap.hpp"
 #include "Window.hpp"
 
 namespace xmaze
@@ -36,19 +35,19 @@ void SetPenColor(Display *display, int screen, GC gc, const char *color)
 void DrawCell(Cell cell, Shape cell_shape, const char *color, DrawFrame &draw_frame)
 {
     const auto &window = draw_frame.GetWindow();
-    auto &pixmap = draw_frame.GetPixmap();
+    auto pixmap = window.GetPixmap();
     auto display = window.GetDisplay();
     auto gc = window.GetGC();
     SetPenColor(display, window.GetScreen(), gc, color);
     const auto [ix, iy] = cell;
     const auto [cw, ch] = cell_shape;
-    XFillRectangle(display, pixmap.GetID(), gc, ix * cw, iy * ch, cw, ch);
+    XFillRectangle(display, pixmap, gc, ix * cw, iy * ch, cw, ch);
 }
 
 void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
 {
     const auto &window = draw_frame.GetWindow();
-    auto &pixmap = draw_frame.GetPixmap();
+    auto pixmap = window.GetPixmap();
     auto display = window.GetDisplay();
     auto gc = window.GetGC();
     SetDefaultPen(display, gc);
@@ -73,19 +72,19 @@ void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
             const short yend = (iy + 1) * cell_height;
             if (cell & NORTH_BIT)
             {
-                XDrawLine(display, pixmap.GetID(), gc, xstart, ystart, xend, ystart);
+                XDrawLine(display, pixmap, gc, xstart, ystart, xend, ystart);
             }
             if (cell & WEST_BIT)
             {
-                XDrawLine(display, pixmap.GetID(), gc, xstart, ystart, xstart, yend);
+                XDrawLine(display, pixmap, gc, xstart, ystart, xstart, yend);
             }
             if (cell & SOUTH_BIT)
             {
-                XDrawLine(display, pixmap.GetID(), gc, xstart, yend, xend, yend);
+                XDrawLine(display, pixmap, gc, xstart, yend, xend, yend);
             }
             if (cell & EAST_BIT)
             {
-                XDrawLine(display, pixmap.GetID(), gc, xend, ystart, xend, yend);
+                XDrawLine(display, pixmap, gc, xend, ystart, xend, yend);
             }
         }
     }

@@ -20,6 +20,7 @@ class Window
     int GetScreen() const;
     ::Window GetNativeWindow() const;
     GC GetGC() const;
+    Pixmap GetPixmap() const;
     ~Window();
 
   private:
@@ -27,6 +28,7 @@ class Window
     int m_Screen;
     ::Window m_Window;
     GC m_GC;
+    Pixmap m_Pixmap;
     bool m_ShouldClose = false;
 };
 

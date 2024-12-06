@@ -44,11 +44,16 @@ xmaze::Window xmaze::Window::Create(size_t width, size_t height)
     XSetForeground(window.m_Display, window.m_GC, BlackPixel(window.m_Display, window.m_Screen));
 
     XMapWindow(window.m_Display, window.m_Window);
+
+    window.m_Pixmap = XCreatePixmap(window.m_Display, window.m_Window, width, height,
+                                    DefaultDepth(window.m_Display, window.m_Screen));
+
     return window;
 }
 
 xmaze::Window::~Window()
 {
+    XFreePixmap(m_Display, m_Pixmap);
     XFreeGC(m_Display, m_GC);
     XDestroyWindow(m_Display, m_Window);
     XCloseDisplay(m_Display);
@@ -106,6 +111,11 @@ int Window::GetScreen() const
 GC Window::GetGC() const
 {
     return m_GC;
+}
+
+Pixmap Window::GetPixmap() const
+{
+    return m_Pixmap;
 }
 
 }; // namespace xmaze

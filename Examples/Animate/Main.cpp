@@ -6,7 +6,6 @@
 #include "DrawFrame.hpp"
 #include "Maze.hpp"
 #include "MazeGenerator.hpp"
-#include "Pixmap.hpp"
 #include "Window.hpp"
 
 class LimitFps
@@ -40,7 +39,6 @@ int main()
     const size_t FPS = 60;
 
     xmaze::Window window = xmaze::Window::Create(WIDTH, HEIGHT);
-    auto pixmap = xmaze::Pixmap(window);
 
     xmaze::MazeGenerator generator({MAZE_COLS, MAZE_ROWS});
 
@@ -55,7 +53,7 @@ int main()
                 window.SetShouldClose();
             }
         }
-        xmaze::DrawFrame frame(window, pixmap);
+        xmaze::DrawFrame frame(window);
         generator.Advance();
         const auto &maze = generator.GetMaze();
         const auto cell_shape = xmaze::GetCellShape(window, maze);
