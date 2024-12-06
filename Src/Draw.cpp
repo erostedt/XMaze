@@ -49,11 +49,11 @@ void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
     SetDefaultPen(display, gc);
 
     const auto rect = window.GetActiveArea();
-    const auto width = rect.shape.width;
-    const auto height = rect.shape.height;
+    const auto width = rect.Width();
+    const auto height = rect.Height();
 
-    const size_t cell_width = width / maze.Cols();
-    const size_t cell_height = height / maze.Rows();
+    const int cell_width = width / maze.Cols();
+    const int cell_height = height / maze.Rows();
 
     SetPenColor(display, window.GetScreen(), gc, "black");
     for (int iy = 0; iy < maze.Rows(); ++iy)

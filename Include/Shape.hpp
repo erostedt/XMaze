@@ -23,35 +23,51 @@ struct Shape
     int height;
 };
 
-struct Rect
+class Rect
 {
-    Origin top_left;
-    Shape shape;
+  public:
+    Rect(Origin top_left, Shape shape) : m_TopLeft(top_left), m_Shape(shape)
+    {
+    }
 
     int Left() const
     {
-        return top_left.x;
+        return m_TopLeft.x;
     }
+
     int Right() const
     {
-        return top_left.x + shape.width;
+        return m_TopLeft.x + m_Shape.width;
     }
+
     int Top() const
     {
-        return top_left.y;
+        return m_TopLeft.y;
     }
+
     int Bottom() const
     {
-        return top_left.y + shape.height;
+        return m_TopLeft.y + m_Shape.height;
     }
+
     int Width() const
     {
-        return shape.width;
+        return m_Shape.width;
     }
+
     int Height() const
     {
-        return shape.height;
+        return m_Shape.height;
     }
+
+    int Area() const
+    {
+        return Width() * Height();
+    }
+
+  private:
+    Origin m_TopLeft;
+    Shape m_Shape;
 };
 
 }; // namespace xmaze

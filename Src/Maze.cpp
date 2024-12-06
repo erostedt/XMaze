@@ -81,10 +81,7 @@ void Maze::_RemoveWall(Cell cell, Wall wall)
 Shape GetCellShape(const Window &window, const Maze &maze)
 {
     const auto rect = window.GetActiveArea();
-    const auto width = rect.shape.width;
-    const auto height = rect.shape.height;
-
-    return {width / maze.Cols(), height / maze.Rows()};
+    return {rect.Width() / maze.Cols(), rect.Height() / maze.Rows()};
 }
 
 }; // namespace xmaze
