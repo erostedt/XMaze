@@ -90,7 +90,7 @@ bool Maze::HasWall(Cell cell, Wall wall) const
     return At(cell) & WALL_BITS[static_cast<int>(wall)];
 }
 
-bool Maze::OutOfBounds(Cell cell)
+bool Maze::OutOfBounds(Cell cell) const
 {
     const int width = m_Shape.width;
     const int height = m_Shape.height;

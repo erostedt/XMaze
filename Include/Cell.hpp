@@ -8,6 +8,8 @@
 
 using Cell = Point<int>;
 
+const static Cell INVALID_CELL = Cell{-1, -1};
+
 namespace std
 {
 template <> struct hash<Cell>
@@ -22,13 +24,6 @@ template <> struct hash<Cell>
     }
 };
 } // namespace std
-
-/*
-template <typename T>
-inline void hash_combine(std::size_t& seed, const T& value) {
-    std::hash<T> hasher;
-}
-*/
 
 using Direction = Point<int>;
 

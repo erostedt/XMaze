@@ -71,7 +71,7 @@ class Maze
 
     int Rows() const;
     int Cols() const;
-    bool OutOfBounds(Cell cell);
+    bool OutOfBounds(Cell cell) const;
 
     const unsigned char &At(Cell cell) const;
     unsigned char &At(Cell cell);
