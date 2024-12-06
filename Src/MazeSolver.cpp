@@ -1,12 +1,13 @@
 #include "MazeSolver.hpp"
-#include "Cell.hpp"
 
+#include <algorithm>
 #include <functional>
-#include <iostream>
 #include <math.h>
 #include <queue>
 #include <stdexcept>
 #include <unordered_map>
+
+#include "Cell.hpp"
 
 namespace XMaze
 {
@@ -46,8 +47,6 @@ std::vector<Cell> SolveMaze(const Maze &maze)
 
         if (current.Position == end_cell)
         {
-            std::cout << "Found path!" << std::endl;
-
             std::vector<Cell> path;
             Cell curr = current.Position;
             while (curr != start_cell)
