@@ -1,4 +1,5 @@
 #include "Draw.hpp"
+#include "Maze.hpp"
 
 #include <stdexcept>
 
@@ -48,38 +49,31 @@ void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
     auto gc = window.GetGC();
     SetDefaultPen(display, gc);
 
-    const auto rect = window.GetActiveArea();
-    const auto width = rect.Width();
-    const auto height = rect.Height();
-
-    const int cell_width = width / maze.Cols();
-    const int cell_height = height / maze.Rows();
+    const auto [cell_width, cell_height] = GetCellShape(window, maze);
 
     SetPenColor(display, window.GetScreen(), gc, "black");
-    for (int iy = 0; iy < maze.Rows(); ++iy)
+    for (const auto cell : maze)
     {
-        for (int ix = 0; ix < maze.Cols(); ++ix)
+        const auto [ix, iy] = cell;
+        const short xstart = ix * cell_width;
+        const short xend = (ix + 1) * cell_width;
+        const short ystart = iy * cell_height;
+        const short yend = (iy + 1) * cell_height;
+        if (maze.HasWall({ix, iy}, NORTH))
         {
-            const short xstart = ix * cell_width;
-            const short xend = (ix + 1) * cell_width;
-            const short ystart = iy * cell_height;
-            const short yend = (iy + 1) * cell_height;
-            if (maze.HasWall({ix, iy}, NORTH))
-            {
-                XDrawLine(display, pixmap, gc, xstart, ystart, xend, ystart);
-            }
-            if (maze.HasWall({ix, iy}, WEST))
-            {
-                XDrawLine(display, pixmap, gc, xstart, ystart, xstart, yend);
-            }
-            if (maze.HasWall({ix, iy}, SOUTH))
-            {
-                XDrawLine(display, pixmap, gc, xstart, yend, xend, yend);
-            }
-            if (maze.HasWall({ix, iy}, EAST))
-            {
-                XDrawLine(display, pixmap, gc, xend, ystart, xend, yend);
-            }
+            XDrawLine(display, pixmap, gc, xstart, ystart, xend, ystart);
+        }
+        if (maze.HasWall({ix, iy}, WEST))
+        {
+            XDrawLine(display, pixmap, gc, xstart, ystart, xstart, yend);
+        }
+        if (maze.HasWall({ix, iy}, SOUTH))
+        {
+            XDrawLine(display, pixmap, gc, xstart, yend, xend, yend);
+        }
+        if (maze.HasWall({ix, iy}, EAST))
+        {
+            XDrawLine(display, pixmap, gc, xend, ystart, xend, yend);
         }
     }
 }

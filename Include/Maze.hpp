@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 
+#include "CellIterator.hpp"
 #include "DrawFrame.hpp"
 #include "Shape.hpp"
 #include "Window.hpp"
@@ -43,6 +44,9 @@ class Maze
 {
   public:
     Maze(Shape shape, Cell start, Cell end);
+
+    MazeCellIterator begin() const;
+    MazeCellIterator end() const;
 
     int RavelCell(Cell cell) const;
     const unsigned char &At(Cell cell) const;
