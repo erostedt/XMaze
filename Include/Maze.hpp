@@ -69,18 +69,21 @@ class Maze
     MazeIterator begin() const;
     MazeIterator end() const;
 
-    int RavelCell(Cell cell) const;
-    const unsigned char &At(Cell cell) const;
-    unsigned char &At(Cell cell);
-    void RemoveWall(Cell cell, Wall wall);
-    int Cols() const;
     int Rows() const;
-    Cell StartCell() const;
-    Cell EndCell() const;
-    bool HasWall(Cell cell, Wall wall) const;
+    int Cols() const;
     bool OutOfBounds(Cell cell);
 
+    const unsigned char &At(Cell cell) const;
+    unsigned char &At(Cell cell);
+
+    bool HasWall(Cell cell, Wall wall) const;
+    void RemoveWall(Cell cell, Wall wall);
+
+    Cell StartCell() const;
+    Cell EndCell() const;
+
   private:
+    int RavelCell(Cell cell) const;
     void _RemoveWall(Cell cell, Wall wall);
 
   public:
