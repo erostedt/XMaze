@@ -3,7 +3,6 @@
 
 #include <functional>
 #include <iostream>
-#include <limits>
 #include <math.h>
 #include <queue>
 #include <stdexcept>
@@ -12,12 +11,10 @@
 namespace XMaze
 {
 
-const int DEFAULT_FSCORE = std::numeric_limits<int>::max();
-
 struct AStarCell
 {
     Cell Position;
-    int FScore = DEFAULT_FSCORE;
+    int FScore;
 
     bool operator>(const AStarCell &other) const
     {
@@ -72,13 +69,11 @@ std::vector<Cell> SolveMaze(const Maze &maze)
             }
 
             Cell neighbor = current.Position + GetDirection(wall);
-            if (!min_distances_traveled.contains(neighbor))
-            {
-                min_distances_traveled[neighbor] = DEFAULT_FSCORE;
-            }
-
             int tentative_distance_traveled = min_distances_traveled[current.Position] + 1;
-            if (tentative_distance_traveled >= min_distances_traveled[neighbor])
+
+            const auto min_distance_traveled = min_distances_traveled.find(neighbor);
+            if (min_distance_traveled != min_distances_traveled.cend() &&
+                min_distance_traveled->second < tentative_distance_traveled)
             {
                 continue;
             }
