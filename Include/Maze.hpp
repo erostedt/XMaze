@@ -44,19 +44,15 @@ class Maze
   public:
     Maze(Shape shape, Cell start, Cell end);
 
-    int RavelIndex(int x, int y) const;
-    size_t RavelIndex(size_t x, size_t y) const;
     int RavelCell(Cell cell) const;
-    const unsigned char &At(size_t x, size_t y) const;
-    unsigned char &At(size_t x, size_t y);
     const unsigned char &At(Cell cell) const;
     unsigned char &At(Cell cell);
     void RemoveWall(Cell cell, Wall wall);
-    size_t Cols() const;
-    size_t Rows() const;
+    int Cols() const;
+    int Rows() const;
     Cell StartCell() const;
     Cell EndCell() const;
-    bool HasWall(size_t x, size_t y, Wall wall) const;
+    bool HasWall(Cell cell, Wall wall) const;
     bool OutOfBounds(Cell cell);
 
   private:

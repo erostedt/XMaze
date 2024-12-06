@@ -56,27 +56,27 @@ void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
     const size_t cell_height = height / maze.Rows();
 
     SetPenColor(display, window.GetScreen(), gc, "black");
-    for (size_t iy = 0; iy < maze.Rows(); ++iy)
+    for (int iy = 0; iy < maze.Rows(); ++iy)
     {
-        for (size_t ix = 0; ix < maze.Cols(); ++ix)
+        for (int ix = 0; ix < maze.Cols(); ++ix)
         {
             const short xstart = ix * cell_width;
             const short xend = (ix + 1) * cell_width;
             const short ystart = iy * cell_height;
             const short yend = (iy + 1) * cell_height;
-            if (maze.HasWall(ix, iy, NORTH))
+            if (maze.HasWall({ix, iy}, NORTH))
             {
                 XDrawLine(display, pixmap, gc, xstart, ystart, xend, ystart);
             }
-            if (maze.HasWall(ix, iy, WEST))
+            if (maze.HasWall({ix, iy}, WEST))
             {
                 XDrawLine(display, pixmap, gc, xstart, ystart, xstart, yend);
             }
-            if (maze.HasWall(ix, iy, SOUTH))
+            if (maze.HasWall({ix, iy}, SOUTH))
             {
                 XDrawLine(display, pixmap, gc, xstart, yend, xend, yend);
             }
-            if (maze.HasWall(ix, iy, EAST))
+            if (maze.HasWall({ix, iy}, EAST))
             {
                 XDrawLine(display, pixmap, gc, xend, ystart, xend, yend);
             }

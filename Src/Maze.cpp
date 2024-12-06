@@ -16,39 +16,19 @@ Maze::Maze(Shape shape, Cell start, Cell end) : m_Shape(shape), m_Start(start), 
     std::fill_n(std::back_inserter(m_Cells), CELL_COUNT, ALL_WALLS);
 }
 
-int Maze::RavelIndex(int x, int y) const
-{
-    return x + y * m_Shape.width;
-}
-
-size_t Maze::RavelIndex(size_t x, size_t y) const
-{
-    return x + y * m_Shape.width;
-}
-
 int Maze::RavelCell(Cell cell) const
 {
-    return RavelIndex(cell.x, cell.y);
-}
-
-const unsigned char &Maze::At(size_t x, size_t y) const
-{
-    return m_Cells[RavelIndex(x, y)];
-}
-
-unsigned char &Maze::At(size_t x, size_t y)
-{
-    return m_Cells[RavelIndex(x, y)];
+    return cell.x + cell.y * m_Shape.width;
 }
 
 const unsigned char &Maze::At(Cell cell) const
 {
-    return At(cell.x, cell.y);
+    return m_Cells[RavelCell(cell)];
 }
 
 unsigned char &Maze::At(Cell cell)
 {
-    return At(cell.x, cell.y);
+    return m_Cells[RavelCell(cell)];
 }
 
 void Maze::RemoveWall(Cell cell, Wall wall)
@@ -57,12 +37,12 @@ void Maze::RemoveWall(Cell cell, Wall wall)
     _RemoveWall(cell + DIRECTIONS[wall], OPPOSITE_WALL[wall]);
 }
 
-size_t Maze::Cols() const
+int Maze::Cols() const
 {
     return m_Shape.width;
 }
 
-size_t Maze::Rows() const
+int Maze::Rows() const
 {
     return m_Shape.height;
 }
@@ -77,9 +57,9 @@ Cell Maze::EndCell() const
     return m_End;
 }
 
-bool Maze::HasWall(size_t x, size_t y, Wall wall) const
+bool Maze::HasWall(Cell cell, Wall wall) const
 {
-    return At(x, y) & WALL_BITS[wall];
+    return At(cell) & WALL_BITS[wall];
 }
 
 bool Maze::OutOfBounds(Cell cell)
