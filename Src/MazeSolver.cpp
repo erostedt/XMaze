@@ -1,10 +1,8 @@
 #include "MazeSolver.hpp"
 
 #include <algorithm>
-#include <functional>
 #include <math.h>
 #include <queue>
-#include <stdexcept>
 #include <unordered_map>
 
 #include "Cell.hpp"
@@ -12,79 +10,90 @@
 namespace XMaze
 {
 
-struct AStarCell
-{
-    Cell Position;
-    int FScore;
-
-    bool operator>(const AStarCell &other) const
-    {
-        return FScore > other.FScore;
-    }
-};
-
 int ManhattanHeuristic(Cell current_cell, Cell target_cell)
 {
     return std::abs(current_cell.x - target_cell.x) + std::abs(current_cell.y - target_cell.y);
 }
 
-std::vector<Cell> SolveMaze(const Maze &maze)
+MazeSolver::MazeSolver(const Maze &maze) : m_Maze(maze)
 {
-    std::priority_queue<AStarCell, std::vector<AStarCell>, std::greater<AStarCell>> queue;
-    Cell start_cell = maze.StartCell();
-    Cell end_cell = maze.EndCell();
-    queue.push({start_cell, ManhattanHeuristic(start_cell, end_cell)});
+    const auto start = m_Maze.StartCell();
+    const auto end = m_Maze.EndCell();
+    m_Queue.push({start, ManhattanHeuristic(start, end)});
+    m_MinDistancesTraveled[start] = 0;
+}
 
-    std::vector<Cell> neighbors;
-    neighbors.reserve(WALL_COUNT);
-    std::unordered_map<Cell, int> min_distances_traveled = {{start_cell, 0}};
-    std::unordered_map<Cell, Cell> parents;
+bool MazeSolver::HasTerminated() const
+{
+    return m_Queue.empty() || m_Path.has_value();
+}
 
-    while (!queue.empty())
+std::optional<Path> MazeSolver::GetPath() const
+{
+    return m_Path;
+}
+
+bool MazeSolver::Advance()
+{
+    if (HasTerminated())
     {
-        auto current = queue.top();
-        queue.pop();
-
-        if (current.Position == end_cell)
-        {
-            std::vector<Cell> path;
-            Cell curr = current.Position;
-            while (curr != start_cell)
-            {
-                path.push_back(curr);
-                curr = parents[curr];
-            }
-            path.push_back(start_cell);
-            std::reverse(path.begin(), path.end());
-            return path;
-        }
-
-        neighbors.clear();
-        for (const auto wall : WALLS)
-        {
-            if (maze.HasWall(current.Position, wall))
-            {
-                continue;
-            }
-
-            Cell neighbor = current.Position + GetDirection(wall);
-            int tentative_distance_traveled = min_distances_traveled[current.Position] + 1;
-
-            const auto min_distance_traveled = min_distances_traveled.find(neighbor);
-            if (min_distance_traveled != min_distances_traveled.cend() &&
-                min_distance_traveled->second < tentative_distance_traveled)
-            {
-                continue;
-            }
-
-            min_distances_traveled[neighbor] = tentative_distance_traveled;
-
-            parents[neighbor] = current.Position;
-            queue.push({neighbor, tentative_distance_traveled + ManhattanHeuristic(neighbor, end_cell)});
-        }
+        return true;
     }
 
-    throw std::runtime_error("Maze does not contain a solution!");
+    const auto start = m_Maze.StartCell();
+    const auto end = m_Maze.EndCell();
+
+    auto current = m_Queue.top();
+    m_Queue.pop();
+
+    if (current.Position == end)
+    {
+        std::vector<Cell> path;
+        Cell curr = current.Position;
+        while (curr != start)
+        {
+            path.push_back(curr);
+            curr = m_Parents[curr];
+        }
+        path.push_back(start);
+        std::reverse(path.begin(), path.end());
+        m_Path = path;
+        return true;
+    }
+
+    for (const auto wall : WALLS)
+    {
+        if (m_Maze.HasWall(current.Position, wall))
+        {
+            continue;
+        }
+
+        Cell neighbor = current.Position + GetDirection(wall);
+        int tentative_distance_traveled = m_MinDistancesTraveled[current.Position] + 1;
+
+        const auto min_distance_traveled = m_MinDistancesTraveled.find(neighbor);
+        if (min_distance_traveled != m_MinDistancesTraveled.cend() &&
+            min_distance_traveled->second < tentative_distance_traveled)
+        {
+            continue;
+        }
+
+        m_MinDistancesTraveled[neighbor] = tentative_distance_traveled;
+
+        m_Parents[neighbor] = current.Position;
+        m_Queue.push({neighbor, tentative_distance_traveled + ManhattanHeuristic(neighbor, end)});
+    }
+
+    return HasTerminated();
+}
+
+std::optional<Path> MazeSolver::Solve()
+{
+    while (!HasTerminated())
+    {
+        Advance();
+    }
+    return GetPath();
 }
 
 }; // namespace XMaze

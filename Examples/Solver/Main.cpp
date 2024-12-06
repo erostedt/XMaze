@@ -20,7 +20,8 @@ int main()
 
     MazeGenerator generator({MAZE_COLS, MAZE_ROWS});
     const auto maze = generator.Generate();
-    const auto path = SolveMaze(maze);
+    // const auto path = SolveMaze(maze);
+    const auto path = MazeSolver(maze).Solve();
 
     const auto cell_shape = GetCellShape(window, maze);
     while (!window.ShouldClose())
@@ -36,7 +37,7 @@ int main()
         }
 
         DrawFrame frame = window.NewDrawFrame();
-        for (const auto cell : path)
+        for (const auto cell : *path)
         {
             DrawCell(cell, cell_shape, "green", frame);
         }
