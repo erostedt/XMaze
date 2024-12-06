@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <thread>
 
+#include "Draw.hpp"
 #include "DrawFrame.hpp"
 #include "Maze.hpp"
 #include "MazeGenerator.hpp"

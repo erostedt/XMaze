@@ -1,5 +1,7 @@
 #include "Draw.hpp"
 
+#include <stdexcept>
+
 namespace xmaze
 {
 

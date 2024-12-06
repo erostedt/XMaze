@@ -1,8 +1,6 @@
 #pragma once
 
-#include <algorithm>
 #include <array>
-#include <iterator>
 #include <vector>
 
 #include "DrawFrame.hpp"
@@ -44,97 +42,25 @@ const static std::array<Wall, WALL_COUNT> OPPOSITE_WALL = {SOUTH, EAST, NORTH, W
 class Maze
 {
   public:
-    Maze(Shape shape, Cell start, Cell end) : m_Shape(shape), m_Start(start), m_End(end)
-    {
-        const unsigned char ALL_WALLS = NORTH_BIT | WEST_BIT | SOUTH_BIT | EAST_BIT;
-        const size_t CELL_COUNT = m_Shape.height * m_Shape.width;
+    Maze(Shape shape, Cell start, Cell end);
 
-        m_Cells.reserve(CELL_COUNT);
-        std::fill_n(std::back_inserter(m_Cells), CELL_COUNT, ALL_WALLS);
-    }
-
-    inline int RavelIndex(int x, int y) const
-    {
-        return x + y * m_Shape.width;
-    }
-
-    inline size_t RavelIndex(size_t x, size_t y) const
-    {
-        return x + y * m_Shape.width;
-    }
-
-    inline int RavelCell(Cell cell) const
-    {
-        return RavelIndex(cell.x, cell.y);
-    }
-
-    inline const unsigned char &At(size_t x, size_t y) const
-    {
-        return m_Cells[RavelIndex(x, y)];
-    }
-
-    inline unsigned char &At(size_t x, size_t y)
-    {
-        return m_Cells[RavelIndex(x, y)];
-    }
-
-    inline const unsigned char &At(Cell cell) const
-    {
-        return At(cell.x, cell.y);
-    }
-
-    inline unsigned char &At(Cell cell)
-    {
-        return At(cell.x, cell.y);
-    }
-
-    inline void RemoveWall(Cell cell, Wall wall)
-    {
-        _RemoveWall(cell, wall);
-        _RemoveWall(cell + DIRECTIONS[wall], OPPOSITE_WALL[wall]);
-    }
-
-    inline size_t Cols() const
-    {
-        return m_Shape.width;
-    }
-
-    inline size_t Rows() const
-    {
-        return m_Shape.height;
-    }
-
-    inline Cell StartCell() const
-    {
-        return m_Start;
-    }
-
-    inline Cell EndCell() const
-    {
-        return m_End;
-    }
-
-    inline bool HasWall(size_t x, size_t y, Wall wall) const
-    {
-        return At(x, y) & WALL_BITS[wall];
-    }
-
-    inline bool OutOfBounds(Cell cell)
-    {
-        const int width = m_Shape.width;
-        const int height = m_Shape.height;
-        return cell.x < 0 || cell.x >= width || cell.y < 0 || cell.y >= height;
-    }
+    int RavelIndex(int x, int y) const;
+    size_t RavelIndex(size_t x, size_t y) const;
+    int RavelCell(Cell cell) const;
+    const unsigned char &At(size_t x, size_t y) const;
+    unsigned char &At(size_t x, size_t y);
+    const unsigned char &At(Cell cell) const;
+    unsigned char &At(Cell cell);
+    void RemoveWall(Cell cell, Wall wall);
+    size_t Cols() const;
+    size_t Rows() const;
+    Cell StartCell() const;
+    Cell EndCell() const;
+    bool HasWall(size_t x, size_t y, Wall wall) const;
+    bool OutOfBounds(Cell cell);
 
   private:
-    inline void _RemoveWall(Cell cell, Wall wall)
-    {
-        if (!OutOfBounds(cell))
-        {
-            unsigned char &walls = At(cell);
-            walls &= ~WALL_BITS[wall];
-        }
-    }
+    void _RemoveWall(Cell cell, Wall wall);
 
   public:
     Shape m_Shape;
@@ -142,9 +68,6 @@ class Maze
     Cell m_End;
     std::vector<unsigned char> m_Cells;
 };
-
-void DrawCell(Cell cell, Shape cell_shape, const char *color, DrawFrame &draw_frame);
-void DrawMaze(const Maze &maze, DrawFrame &draw_frame);
 
 Shape GetCellShape(const Window &window, const Maze &maze);
 
