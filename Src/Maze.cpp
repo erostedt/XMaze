@@ -64,25 +64,23 @@ void DrawMaze(const Maze &maze, DrawFrame &draw_frame)
     {
         for (size_t ix = 0; ix < maze.Cols(); ++ix)
         {
-            const auto cell = maze.At(ix, iy);
-
             const short xstart = ix * cell_width;
             const short xend = (ix + 1) * cell_width;
             const short ystart = iy * cell_height;
             const short yend = (iy + 1) * cell_height;
-            if (cell & NORTH_BIT)
+            if (maze.HasWall(ix, iy, NORTH))
             {
                 XDrawLine(display, pixmap, gc, xstart, ystart, xend, ystart);
             }
-            if (cell & WEST_BIT)
+            if (maze.HasWall(ix, iy, WEST))
             {
                 XDrawLine(display, pixmap, gc, xstart, ystart, xstart, yend);
             }
-            if (cell & SOUTH_BIT)
+            if (maze.HasWall(ix, iy, SOUTH))
             {
                 XDrawLine(display, pixmap, gc, xstart, yend, xend, yend);
             }
-            if (cell & EAST_BIT)
+            if (maze.HasWall(ix, iy, EAST))
             {
                 XDrawLine(display, pixmap, gc, xend, ystart, xend, yend);
             }

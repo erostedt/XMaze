@@ -104,14 +104,19 @@ class Maze
         return m_Shape.height;
     }
 
-    Cell StartCell() const
+    inline Cell StartCell() const
     {
         return m_Start;
     }
 
-    Cell EndCell() const
+    inline Cell EndCell() const
     {
         return m_End;
+    }
+
+    inline bool HasWall(size_t x, size_t y, Wall wall) const
+    {
+        return At(x, y) & WALL_BITS[wall];
     }
 
     inline bool OutOfBounds(Cell cell)
