@@ -1,6 +1,5 @@
 #pragma once
 
-#include <array>
 #include <vector>
 
 #include "Cell.hpp"
@@ -10,20 +9,6 @@
 
 namespace XMaze
 {
-
-static const size_t WALL_COUNT = 4;
-
-enum class Wall
-{
-    NORTH = 0,
-    WEST,
-    SOUTH,
-    EAST
-};
-
-const static std::array<Wall, WALL_COUNT> WALLS = {Wall::NORTH, Wall::WEST, Wall::SOUTH, Wall::EAST};
-
-Direction GetDirection(Wall wall);
 
 class Maze
 {

@@ -24,13 +24,6 @@ static const unsigned char WALL_BITS[] = {
 
 const static std::array<Wall, WALL_COUNT> OPPOSITE_WALL = {Wall::SOUTH, Wall::EAST, Wall::NORTH, Wall::WEST};
 
-const static std::array<Direction, WALL_COUNT> DIRECTIONS = {Direction{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
-
-Direction GetDirection(Wall wall)
-{
-    return DIRECTIONS[static_cast<int>(wall)];
-}
-
 Maze::Maze(Shape shape, Cell start, Cell end) : m_Shape(shape), m_Start(start), m_End(end)
 {
     const unsigned char ALL_WALLS = NORTH_BIT | WEST_BIT | SOUTH_BIT | EAST_BIT;
