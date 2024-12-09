@@ -6,7 +6,7 @@ set(EXAMPLES_PATH ./Examples)
 set(SRC_PATH ./Src)
 set(CMAKE_CXX_STANDARD 23)
 
-set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra -Wpedantic")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic")
 
 include_directories(${PROJECT_SOURCE_DIR}/Include)
 file(GLOB sources ${SRC_PATH}/*.cpp)
